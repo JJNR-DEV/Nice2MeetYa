@@ -1,0 +1,42 @@
+ul{
+    list-style: none;
+    padding-left: 0;
+}
+
+li{
+    padding: 0.5em 0;
+}
+
+form{
+    padding: 2em 0.5em
+}
+
+.header{
+    padding: 1.5em 0em
+}
+
+.svg-inline--fa{
+    cursor: pointer;
+}
+
+.btn{
+    cursor: pointer;
+}
+
+#done{
+    animation-name: opacityOnAndOff;
+    animation-duration: 3s;
+    opacity: 0;
+}
+
+@keyframes opacityOnAndOff {
+    0% {
+        opacity: 0;
+    }
+    50%{
+      opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
