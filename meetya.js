@@ -1,4 +1,4 @@
-'use stricts'
+'use strict'
 
 $("#create-contact").click(function() {
 	var $this = $(this),
