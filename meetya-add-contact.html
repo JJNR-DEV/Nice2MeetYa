@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Nice To MeetYa</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <!-- Font Awesome -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 
+	<!-- Custom CSS -->
 	<link rel="stylesheet" href="meetya.css">
 
+	<!-- Dependencies -->
+	<!-- jQuery for Bootstrap -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Font Awesome CDN -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+
+	<!-- Custom JS-->
 	<script src="meetya.js"></script>
 </head>
 <body>
 	
-	<div class="container">
+	<main class="container">
 
+		<!-- Return icon to main page -->
 		<a href="nice-to-meetya.html">
 			<i class="fas fa-arrow-left"></i>
 			Back
@@ -28,44 +34,64 @@
 
 		<form class="needs-validation" novalidate>
 		  <div class="form-group">
-		    <label for="name">Name</label>
-		    <input type="name" class="form-control" id="contact-name" placeholder="Name" required>
+		    <label for="contact-name">Name</label>
+			<input type="text" class="form-control" id="contact-name" placeholder="Name" required>
+			<div class="invalid-feedback">
+				Please provide a valid name.
+			</div>
 		  </div>
 		  <div class="form-group">
 		    <label for="company-name">Company Name</label>
-		    <input type="company-name" class="form-control" id="company-name" placeholder="Company Name" required>
+			<input type="text" class="form-control" id="company-name" placeholder="Company Name" required>
+			<div class="invalid-feedback">
+				Please provide a valid company name.
+			</div>
 		  </div>
 		  <div class="form-group">
-		    <label for="email">Email Address</label>
-		    <input type="email" class="form-control" id="email-address" aria-describedby="email" placeholder="Email Address" required>
+		    <label for="email-address">Email Address</label>
+			<input type="email" class="form-control" id="email-address" aria-describedby="email-address" placeholder="Email Address" required>
+			<div class="invalid-feedback">
+				Please provide a valid email address.
+			</div>
 		  </div>
-		  <button type="submit" class="btn btn-dark float-right" id="add-contact" onclick="event.preventDefault(); createContact()">Add</button>
+		  <button type="submit" class="btn btn-dark float-right" id="add-contact">Add</button>
 		</form>
 
+		<!-- Container to display confirmation of contact added -->
 		<div class="container" id="confirmation"></div>
-	</div>
+	</main>
 
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<!-- JavaScript form validation from Bootstrap with custom elements -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
 		(function() {
-		window.addEventListener('load', function() {
-			// Fetch all the forms we want to apply custom Bootstrap validation styles to
-			var forms = document.getElementsByClassName('needs-validation');
-			// Loop over them and prevent submission
-			var validation = Array.prototype.filter.call(forms, function(form) {
-				form.addEventListener('submit', function(event) {
-					if (form.checkValidity() === false) {
+			window.addEventListener('load', function() {
+				// Fetch all the forms we want to apply custom Bootstrap validation styles to
+				var forms = document.getElementsByClassName('needs-validation');
+				// Loop over them and prevent submission
+				var validation = Array.prototype.filter.call(forms, function(form) {
+					form.addEventListener('submit', function(event) {
+						if (form.checkValidity() === false) {
+							event.preventDefault();
+							event.stopPropagation();
+						}
+						// Validation complete
+						form.classList.add('was-validated');
+						var validationInputs = document.getElementsByClassName('form-control')
+						
+						// Check if there are empty elements or type mismatch
+						for(var i = 0; i < validationInputs.length; i++){
+							if(validationInputs[i].validity.valueMissing === true || validationInputs[i].validity.typeMismatch === true){
+								// Stop if invalid
+								return
+							}
+						}
+						createContact()
 						event.preventDefault();
-						event.stopPropagation();
-					}
-					form.classList.add('was-validated');
-				}, false);
-			});
-		}, false);
-	})();
+					}, false);
+				});
+			}, false);
+		})();
 	</script>
 </body>
 </html>
